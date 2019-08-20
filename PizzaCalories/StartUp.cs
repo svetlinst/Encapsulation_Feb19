@@ -6,32 +6,28 @@
     {
         static void Main(string[] args)
         {
-            string input;
-
-            while ((input = Console.ReadLine())!="END")
+            try
             {
-                var commandLine = ReadInput(input);
+                var pizzaName = ReadInput(Console.ReadLine());
+                Pizza pizza = new Pizza(pizzaName[1]);
+                var doughInfo = ReadInput(Console.ReadLine());
+                Dough dough = new Dough(doughInfo[1], doughInfo[2], double.Parse(doughInfo[3]));
+                pizza.Dough = dough;
+                string input;
 
-                try
+                while ((input = Console.ReadLine()) != "END")
                 {
-                    switch (commandLine[0].ToLower())
-                    {
-                        case "dough":
-                            Dough dough = new Dough(commandLine[1],commandLine[2], double.Parse(commandLine[3]));
-                            Console.WriteLine(dough.CaloriesPerGram);
-                            break;
-                        case "topping":
-                            Topping topping = new Topping(commandLine[1], double.Parse(commandLine[2]));
-                            Console.WriteLine(topping.CaloriesPerGram);
-                            break;
-                    }
+                    var parseCommand = ReadInput(input);
+                    Topping topping = new Topping(parseCommand[1], double.Parse(parseCommand[2]));
+                    pizza.AddTopping(topping);
+
                 }
-                catch (ArgumentException ex)
-                {
-                    Console.WriteLine(ex.Message.ToString());
-                }
+                Console.WriteLine($"{pizza.Name} - {pizza.TotalCalories:F2} Calories.");
             }
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
         }
 
         private static string[] ReadInput(string input)
