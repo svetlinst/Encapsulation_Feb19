@@ -8,11 +8,10 @@
         {
             try
             {
-                var pizzaName = ReadInput(Console.ReadLine());
-                Pizza pizza = new Pizza(pizzaName[1]);
+                var pizzaName = Console.ReadLine().Split(' ');
                 var doughInfo = ReadInput(Console.ReadLine());
                 Dough dough = new Dough(doughInfo[1], doughInfo[2], double.Parse(doughInfo[3]));
-                pizza.Dough = dough;
+                Pizza pizza = new Pizza(pizzaName[1],dough);
                 string input;
 
                 while ((input = Console.ReadLine()) != "END")
